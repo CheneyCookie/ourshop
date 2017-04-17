@@ -1,0 +1,29 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.ourshop.bean">
+	<class name="Order" table="ourshop_order">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="pId"></property>
+		<property name="pName"></property>
+		<property name="pPrice"></property>
+		<property name="pNumber"></property>
+		<property name="pPicture"></property>
+		<property name="total"></property>
+		<property name="message"></property>
+		<property name="date"></property>
+		<property name="address"></property>
+		<property name="name"></property>
+		<property name="phone"></property>
+		
+		<many-to-one name="user" class="User">
+			<column name="uid"></column>
+		</many-to-one>
+		<many-to-one name="status" class="Status">
+			<column name="sid"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

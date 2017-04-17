@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	
+	<!--  该属性设置Struts 2是否支持动态方法调用，该属性的默认值是true。如果需要关闭动态方法调用，则可设置该属性为false。 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
+	<!-- 开发模式，在修改struts配置文件的时候不需要重启容器 
+	<constant name="struts.devMode" value="true"></constant>
+	-->
+	
+	
+	
+	<package name="ourshop" namespace="/" extends="json-default">
+	
+	<!-- 
+		<interceptors>
+             <interceptor-stack name="myStack">
+                  <interceptor-ref name="cookie">
+                     <param name="cookiesName">*</param>
+                     <param name="cookiesValue">*</param>
+                 </interceptor-ref>
+             <interceptor-ref name="defaultStack" />
+             </interceptor-stack>
+         </interceptors>
+	 -->	
+	 
+	 	<interceptors>
+	 		<interceptor name="UserInterceptor" class="com.ourshop.interceptor.UserInterceptor"></interceptor>
+	 	</interceptors>		
+	
+	
+		<global-results>
+			<result name="stream" type="stream">
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="index" type="redirect">/index.jsp</result>
+			<result name="unlogin">/login.jsp</result>
+			<result name="exception">/exception.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		
+		<action name="send_*_*" class="sendAction">
+			<result name="send">/WEB-INF/{1}/{2}.jsp</result>
+		</action>
+		
+		<action name="category_*" class="categoryAction" method="{1}">
+			<result name="jsonMap" type="json">
+				<!-- 要转换成json数据的对象 -->
+				<param name="root">pageMap</param>
+			</result>
+			
+			<result name="jsonList" type="json">
+				<param name="root">jsonList</param>
+			</result>
+		</action>
+		
+		<action name="product_*" class="productAction" method="{1}">
+			<result name="jsonMap" type="json">
+				<param name="root">pageMap</param>
+				<param name="excludeProperties">
+					<!-- rows[0].date -->
+					rows\[\d+\]\.date
+				</param>
+			</result>
+			
+			<result name="cproduct">/c_product.jsp</result>
+			<result name="search">/s_product.jsp</result>
+			<result name="jsonList" type="json">
+				<param name="root">jsonList</param>
+			</result>
+			<result name="detail">/detail.jsp</result>
+		</action>
+		
+		<action name="user_*" class="userAction" method="{1}">
+		<!-- 
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="cookie">
+					<param name="cookiesName">*</param>
+					<param name="cookieValue">*</param>
+				</interceptor-ref>
+		 -->
+		
+			<result name="goURL" type="redirect">
+				${#session.goURL}
+			</result>
+			
+			<result name="ulogin" type="redirect">/login.jsp</result>
+			
+			<result name="register" type="redirect">/index.jsp</result>
+		</action>
+		
+		<action name="imageCheckcode" class="imageCheckcode">
+		
+		</action>
+		<action name="shopCar_*" class="shopCarAction" method="{1}">
+			<result name="query">/user/shopCar.jsp</result>
+			<interceptor-ref name="UserInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="collection_*" class="collectionAction" method="{1}">
+		</action>
+		
+		<action name="admin_*" class="adminAction" method="{1}">
+			<result name="alogin">/WEB-INF/admin/alogin.jsp</result>
+			<result name="aindex">/WEB-INF/admin/aindex.jsp</result>
+		</action>
+		<action name="address_*" class="addressAction" method="{1}">
+		</action>
+		
+		<action name="order_*" class="orderAction" method="{1}">
+			<result name="myorder">/user/myinformation.jsp</result>
+			<result name="jsonMap" type="json">
+				<param name="root">pageMap</param>
+				<param name="excludeProperties">
+					<!-- rows[0].date -->
+					rows\[\d+\]\.date
+					rows\[\d+\]\.user
+				</param>
+			</result>
+		</action>
+		
+		<action name="status" class="statusAction" method="{1}">
+			<result name="jsonList" type="json">
+				<param name="root">jsonList</param>
+			</result>
+		</action>
+	</package>
+	
+	
+</struts>

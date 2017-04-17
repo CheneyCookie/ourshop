@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.ourshop.bean">
+	<class name="Address" table="address">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		<property name="phone"></property>
+		<property name="addName" column="addname"></property>
+		<many-to-one name="user" class="User">
+			<column name="uid"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

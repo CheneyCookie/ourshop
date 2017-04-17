@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping package="com.ourshop.bean">
+	<class name="User" table="user">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		<property name="login"></property>
+		<property name="picture"></property>
+		<property name="password"></property>
+		<property name="sex"></property>
+		<property name="birthday"></property>
+		<property name="date"></property>
+		<property name="phone"></property>
+		<property name="email"></property>
+	</class>
+</hibernate-mapping>
